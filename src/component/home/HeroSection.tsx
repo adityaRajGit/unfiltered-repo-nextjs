@@ -10,7 +10,7 @@ function HeroSection() {
                         <div>
                             <div className="text-center lg:text-left">
                                 <h1 className="text-4xl font-bold leading-tight text-gray-900 sm:text-5xl sm:leading-tight lg:leading-tight lg:text-6xl font-pj">
-                                    Find Your Unfiltered Voice
+                                    Find Your Unfiltered Voices
                                 </h1>
                                 <p className="mt-2 text-lg text-gray-600 sm:mt-8 font-inter">
                                     Your story and struggles deserve to be heard.
