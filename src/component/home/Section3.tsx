@@ -1,4 +1,6 @@
 "use client";
+import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 const reviews = [
@@ -68,8 +70,10 @@ function Section3() {
                         {reviews[current].text}
                     </p>
                     <div className="flex items-center justify-center gap-3 mb-6">
-                        <img
+                        <Image
                             src={reviews[current].image}
+                            width={300}
+                            height={300}
                             alt={reviews[current].author}
                             className="w-12 h-12 rounded-full object-cover"
                         />
@@ -87,13 +91,12 @@ function Section3() {
                         ))}
                     </div>
 
-                    <button
+                    <Link
                         className="px-6 py-2 border border-green-700 text-green-800 font-medium rounded-full hover:bg-green-50 transition duration-200 hover:shadow-lg active:scale-95"
-                        type="button"
-                        onClick={() => { }}
+                        href="/"
                     >
                         More success stories
-                    </button>
+                    </Link>
                 </div>
 
                 {/* Arrows */}
