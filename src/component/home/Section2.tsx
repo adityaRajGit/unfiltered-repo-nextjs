@@ -1,60 +1,113 @@
-import Image from "next/image"
-import Link from "next/link"
+import Image from "next/image";
+import Link from "next/link";
 
 function Section2() {
-
     const therapy = [
         {
             title: "Individual Therapy",
-            desc: "One-on-one sessions to address personal challenges.",
+            desc: "One-on-one sessions to address personal challenges and develop coping strategies.",
             img: '/therapy1.jpg',
         },
         {
             title: "Couples Counseling",
-            desc: "Work on communication and relationship dynamics.",
+            desc: "Work on communication, intimacy, and relationship dynamics with a professional mediator.",
             img: '/therapy2.jpg',
         },
         {
             title: "Teen Therapy",
-            desc: "Support for teens dealing with emotional challenges.",
+            desc: "Support for adolescents dealing with emotional challenges, school stress, and identity issues.",
             img: '/therapy3.jpg',
         },
         {
             title: "Family Therapy",
-            desc: "Improve family dynamics and resolve conflicts.",
+            desc: "Improve family dynamics, resolve conflicts, and strengthen relationships between members.",
             img: '/therapy4.jpg',
         },
         {
-            title: "Psychiatry and Medication",
-            desc: "Professional medical support for mental health.",
+            title: "Psychiatry & Medication",
+            desc: "Professional medical support for mental health conditions and medication management.",
             img: '/therapy5.jpg',
         },
-    ]
+        {
+            title: "Group Therapy",
+            desc: "Share experiences and gain support in a safe group setting with professional guidance.",
+            img: '/therapy6.jpg',
+        },
+    ];
 
     return (
-        <div className="py-16 px-6 bg-white">
-            <h2 className="text-2xl md:text-3xl font-semibold mb-10">
-                Choose the therapy type to your needs
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-                {therapy.map((therapy, idx) => (
-                    <div
-                        key={idx}
-                        className="bg-white rounded-xl shadow-sm overflow-hidden transition duration-200 hover:scale-105 hover:shadow-2xl"
-                    >
-                        <Image src={therapy.img} alt={therapy.title} width={500} height={500} className="w-full h-52 object-cover" />
-                        <div className="p-5">
-                            <h3 className="font-semibold text-lg mb-1">{therapy.title}</h3>
-                            <p className="text-gray-600 text-sm mb-4">{therapy.desc}</p>
-                            <Link
-                                className="text-[#00C28C] border border-[#00C28C] rounded-md px-4 py-1 text-sm font-medium transition duration-200 hover:bg-[#00C28C] hover:text-white hover:shadow-lg active:scale-95"
-                                href="/">Learn More</Link>
-                        </div>
+        <div className="py-16 px-4 sm:px-6 bg-gradient-to-b from-teal-50 to-white">
+            <div className="max-w-7xl mx-auto">
+                <div className="text-center mb-14">
+                    <div className="inline-block px-4 py-1 mb-4 text-sm font-medium text-teal-800 bg-teal-200 rounded-full">
+                        Therapeutic Approaches
                     </div>
-                ))}
+                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                        Therapy Tailored to Your Needs
+                    </h2>
+                    <p className="max-w-2xl mx-auto text-gray-600 text-lg">
+                        Discover the right therapeutic approach for your unique journey. Our diverse range of
+                        services ensures personalized support for every individual.
+                    </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {therapy.map((therapy, idx) => (
+                        <div
+                            key={idx}
+                            className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 transition-all duration-300 hover:shadow-xl"
+                        >
+                            <div className="relative h-60">
+                                <Image
+                                    src={therapy.img}
+                                    alt={therapy.title}
+                                    layout="fill"
+                                    objectFit="cover"
+                                    className="w-full"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                                <div className="absolute bottom-4 left-4">
+                                    <h3 className="text-xl font-bold text-white">{therapy.title}</h3>
+                                </div>
+                            </div>
+
+                            <div className="p-6">
+                                <p className="text-gray-600 mb-5">{therapy.desc}</p>
+                                <div className="flex justify-between items-center">
+                                    <Link
+                                        className="text-teal-700 font-medium hover:text-teal-900 transition-colors flex items-center"
+                                        href="/"
+                                    >
+                                        Learn more
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </Link>
+                                    <div className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-teal-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                <div className="mt-16 text-center">
+                    <Link
+                        href="/therapy"
+                        className="inline-flex items-center px-8 py-3 bg-teal-600 text-white font-medium rounded-full hover:bg-teal-700 transition-colors"
+                    >
+                        Explore All Therapy Options
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                    </Link>
+                </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default Section2
+export default Section2;
