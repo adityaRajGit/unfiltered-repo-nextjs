@@ -56,7 +56,7 @@ function Section3() {
                         Making a Difference, Worldwide
                     </h2>
                     <p className="max-w-2xl mx-auto text-gray-600 mb-12">
-                        We're committed to transforming mental healthcare accessibility
+                        We&apos;re committed to transforming mental healthcare accessibility
                         and helping people find their path to wellness.
                     </p>
 

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 
 export const Header = () => {
-    const [user, setUser] = useState(false);
+    const [user] = useState(false);
     const pathname = usePathname();
 
     const navItems = [
