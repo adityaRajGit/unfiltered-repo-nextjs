@@ -1,82 +1,152 @@
-import Image from "next/image"
-import Link from "next/link"
+import Image from "next/image";
+import Link from "next/link";
+import { FaStar, FaRegStar, FaRegClock, FaRegComments } from "react-icons/fa";
 
 function Section5() {
+    const therapists = [
+        {
+            name: "Dr. Anand Sharma",
+            title: "Clinical Psychologist",
+            specialties: ["Anxiety", "Depression", "Stress Management"],
+            experience: "15 years",
+            sessions: 345,
+            rating: 4.9,
+            reviews: 128,
+            image: '/people/people4.jpg'
+        },
+        {
+            name: "Dr. Rahul Srivastav",
+            title: "Licensed Therapist",
+            specialties: ["Relationship Issues", "Trauma", "Self-Esteem"],
+            experience: "12 years",
+            sessions: 520,
+            rating: 4.8,
+            reviews: 96,
+            image: '/people/people2.jpg'
+        },
+        {
+            name: "Dr. Nidhi Rai",
+            title: "Counseling Psychologist",
+            specialties: ["Grief Counseling", "Life Transitions", "Career Counseling"],
+            experience: "10 years",
+            sessions: 480,
+            rating: 4.9,
+            reviews: 142,
+            image: '/people/people3.jpg'
+        }
+    ];
+
     return (
-        <div className="bg-[#F9F9F9] py-16 px-6">
-            <h2 className="text-2xl md:text-3xl font-semibold text-center mb-12">
-                Our Experienced Therapists
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                <div className="bg-white rounded-xl overflow-hidden shadow-sm transition duration-200 hover:scale-105 hover:shadow-2xl">
-                    <Image
-                        src='/people/people4.jpg'
-                        width={300}
-                        height={300}
-                        alt="Dr. Anya Sharma"
-                        className="w-full h-56 object-cover"
-                    />
-                    <div className="p-5">
-                        <h3 className="font-semibold text-lg">Dr. Anand Sharma</h3>
-                        <p className="text-sm text-gray-600">Clinical Psychologist</p>
-                        <p className="text-sm text-gray-600 mb-3">
-                            Sessions Conducted: 345
-                        </p>
-                        <Link
-                            className="bg-[#00C28C] text-white px-4 py-2 text-sm rounded-md transition duration-200 hover:bg-[#009f75] hover:shadow-lg active:scale-95"
-                            href={"/"}
-                        >
-                            Schedule Session
-                        </Link>
+        <div className="py-20 bg-gradient-to-b from-teal-50 to-white">
+            <div className="max-w-7xl mx-auto px-4">
+                <div className="text-center mb-16">
+                    <div className="inline-block px-4 py-1 mb-4 text-sm font-medium text-teal-800 bg-teal-200 rounded-full">
+                        Meet Our Experts
                     </div>
+                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                        Our Experienced Therapists
+                    </h2>
+                    <p className="max-w-2xl mx-auto text-gray-600 text-lg">
+                        Compassionate professionals dedicated to helping you on your journey to mental wellness.
+                    </p>
                 </div>
-                <div className="bg-white rounded-xl overflow-hidden shadow-sm transition duration-200 hover:scale-105 hover:shadow-2xl">
-                    <Image
-                        src='/people/people2.jpg'
-                        width={300}
-                        height={300}
-                        alt="Dr. Ben Carter"
-                        className="w-full h-56 object-cover"
-                    />
-                    <div className="p-5">
-                        <h3 className="font-semibold text-lg">Dr. Rahul Srivastav</h3>
-                        <p className="text-sm text-gray-600">Licensed Therapist</p>
-                        <p className="text-sm text-gray-600 mb-3">
-                            Sessions Conducted: 520
-                        </p>
-                        <Link
-                            className="bg-[#00C28C] text-white px-4 py-2 text-sm rounded-md transition duration-200 hover:bg-[#009f75] hover:shadow-lg active:scale-95"
-                            href={"/"}
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {therapists.map((therapist, index) => (
+                        <div
+                            key={index}
+                            className="bg-white rounded-2xl shadow-xl overflow-hidden border border-teal-100 transition-all duration-300 hover:shadow-2xl"
                         >
-                            Schedule Session
-                        </Link>
-                    </div>
+                            <div className="relative h-72">
+                                <Image
+                                    src={therapist.image}
+                                    alt={therapist.name}
+                                    layout="fill"
+                                    objectFit="cover"
+                                    className="w-full"
+                                />
+                                <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/80 to-transparent">
+                                    <h3 className="text-xl font-bold text-white">{therapist.name}</h3>
+                                    <p className="text-teal-300 text-sm">{therapist.title}</p>
+                                </div>
+                            </div>
+
+                            <div className="p-6">
+                                <div className="flex justify-between items-center mb-4">
+                                    <div className="flex items-center">
+                                        {[...Array(5)].map((_, i) => (
+                                            i < Math.floor(therapist.rating) ?
+                                                <FaStar key={i} className="text-yellow-400" /> :
+                                                <FaRegStar key={i} className="text-gray-300" />
+                                        ))}
+                                        <span className="ml-2 text-gray-700 font-medium">{therapist.rating}</span>
+                                    </div>
+                                    <div className="flex items-center text-sm text-gray-600">
+                                        <FaRegComments className="mr-1" />
+                                        <span>{therapist.reviews} reviews</span>
+                                    </div>
+                                </div>
+
+                                <div className="mb-5">
+                                    <div className="flex items-center text-sm text-gray-600 mb-2">
+                                        <FaRegClock className="mr-2" />
+                                        <span>{therapist.experience} experience</span>
+                                    </div>
+                                    <div className="text-sm text-gray-600">
+                                        <span className="font-medium">Sessions conducted:</span> {therapist.sessions.toLocaleString()}
+                                    </div>
+                                </div>
+
+                                <div className="mb-6">
+                                    <h4 className="text-sm font-medium text-gray-900 mb-2">Specializes in:</h4>
+                                    <div className="flex flex-wrap gap-2">
+                                        {therapist.specialties.map((specialty, idx) => (
+                                            <span
+                                                key={idx}
+                                                className="px-3 py-1 bg-teal-100 text-teal-800 text-xs font-medium rounded-full"
+                                            >
+                                                {specialty}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="flex justify-between">
+                                    <Link
+                                        href={`/therapists/${therapist.name.replace(/\s+/g, '-').toLowerCase()}`}
+                                        className="text-teal-700 font-medium hover:text-teal-900 transition-colors flex items-center"
+                                    >
+                                        View profile
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </Link>
+                                    <Link
+                                        href="/schedule"
+                                        className="px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-700 transition-colors"
+                                    >
+                                        Schedule Session
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
-                <div className="bg-white rounded-xl overflow-hidden shadow-sm transition duration-200 hover:scale-105 hover:shadow-2xl">
-                    <Image
-                        src='/people/people3.jpg'
-                        width={300}
-                        height={300}
-                        alt="Dr. Chloe Davis"
-                        className="w-full h-56 object-cover"
-                    />
-                    <div className="p-5">
-                        <h3 className="font-semibold text-lg">Dr. Nidhi Rai</h3>
-                        <p className="text-sm text-gray-600">Counseling Psychologist</p>
-                        <p className="text-sm text-gray-600 mb-3">
-                            Sessions Conducted: 480
-                        </p>
-                        <Link
-                            className="bg-[#00C28C] text-white px-4 py-2 text-sm rounded-md transition duration-200 hover:bg-[#009f75] hover:shadow-lg active:scale-95"
-                            href={"/"}
-                        >
-                            Schedule Session
-                        </Link>
-                    </div>
+
+                <div className="mt-16 text-center">
+                    <Link
+                        href="/therapists"
+                        className="inline-flex items-center px-8 py-3 bg-white border-2 border-teal-600 text-teal-700 font-medium rounded-full hover:bg-teal-50 transition-colors"
+                    >
+                        Browse All Therapists
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                    </Link>
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default Section5
+export default Section5;

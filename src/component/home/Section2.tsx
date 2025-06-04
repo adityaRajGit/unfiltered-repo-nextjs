@@ -28,11 +28,11 @@ function Section2() {
             desc: "Professional medical support for mental health conditions and medication management.",
             img: '/therapy5.jpg',
         },
-        {
-            title: "Group Therapy",
-            desc: "Share experiences and gain support in a safe group setting with professional guidance.",
-            img: '/therapy6.jpg',
-        },
+        // {
+        //     title: "Group Therapy",
+        //     desc: "Share experiences and gain support in a safe group setting with professional guidance.",
+        //     img: '',
+        // },
     ];
 
     return (
@@ -61,8 +61,7 @@ function Section2() {
                                 <Image
                                     src={therapy.img}
                                     alt={therapy.title}
-                                    layout="fill"
-                                    objectFit="cover"
+                                    fill style={{ objectFit: 'cover' }}
                                     className="w-full"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
