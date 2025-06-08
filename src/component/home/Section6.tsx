@@ -7,7 +7,7 @@ function Section6() {
         {
             title: "Individual Therapy",
             desc: "Personalized one-on-one sessions tailored to your unique challenges and goals with a licensed therapist.",
-            img: '/therapy1.jpg',
+            img: '/therapy1.jpeg',
             button: "Find Your Therapist",
             icon: <FaUser className="text-2xl text-teal-600" />,
             duration: "50 min sessions",
