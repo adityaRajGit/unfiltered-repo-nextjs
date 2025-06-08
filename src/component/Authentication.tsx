@@ -52,8 +52,8 @@ export const GoogleSignIn: React.FC = () => {
         const idToken = response.credential;
         try {
             const res = await axios.post(`${backend}/user/google-auth-sigin`, { idToken });
-            if (res.status === 200) {
-                localStorage.setItem(TOKEN, JSON.stringify(res.data.token));
+            if (res.status === 200 && res.data?.data?.token) {
+                localStorage.setItem(TOKEN, JSON.stringify(res.data.data.token));
                 router.push("/");
                 toast.success("User Logged in Successfully");
             }
