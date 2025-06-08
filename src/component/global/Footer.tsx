@@ -112,7 +112,7 @@ function Footer() {
                             Privacy Policy
                         </Link>
                         <Link href="#privacy" className="text-gray-400 hover:text-teal-400 text-sm transition-colors">
-                            GDPR & India Compliance
+                            GDPR & DPDP Compliance
                         </Link>
                     </div>
 
