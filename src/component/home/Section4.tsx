@@ -109,7 +109,7 @@ function Section4() {
                                 </p>
                                 <div className="flex flex-wrap gap-4">
                                     <Link
-                                        href="/signup"
+                                        href="/pages/login"
                                         className="px-6 py-3 bg-white text-teal-700 font-medium rounded-full hover:bg-gray-100 transition-colors flex items-center"
                                     >
                                         Create Account

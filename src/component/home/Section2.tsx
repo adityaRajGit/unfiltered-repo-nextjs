@@ -6,33 +6,33 @@ function Section2() {
         {
             title: "Individual Therapy",
             desc: "One-on-one sessions to address personal challenges and develop coping strategies.",
-            img: '/therapy1.jpg',
+            img: '/therapy1.jpeg',
         },
         {
             title: "Couples Counseling",
             desc: "Work on communication, intimacy, and relationship dynamics with a professional mediator.",
-            img: '/therapy2.jpg',
+            img: '/therapy2.jpeg',
         },
         {
             title: "Teen Therapy",
             desc: "Support for adolescents dealing with emotional challenges, school stress, and identity issues.",
-            img: '/therapy3.jpg',
+            img: '/therapy3.jpeg',
         },
         {
             title: "Family Therapy",
             desc: "Improve family dynamics, resolve conflicts, and strengthen relationships between members.",
-            img: '/therapy4.jpg',
+            img: '/therapy4.jpeg',
         },
         {
-            title: "Psychiatry & Medication",
-            desc: "Professional medical support for mental health conditions and medication management.",
-            img: '/therapy5.jpg',
+            title: "Corporate Wellness",
+            desc: "Holistic mental health support for employees through EAPs, on-demand therapy, and expert-led workshops and webinars.",
+            img: '/therapy5.jpeg',
         },
-        // {
-        //     title: "Group Therapy",
-        //     desc: "Share experiences and gain support in a safe group setting with professional guidance.",
-        //     img: '',
-        // },
+        {
+            title: "Life Coaching",
+            desc: "Unlock potential. Build clarity. Lead with confidence. Personal coaching for goal setting, productivity, emotional growth, and leadership.",
+            img: '/therapy6.jpeg',
+        },
     ];
 
     return (

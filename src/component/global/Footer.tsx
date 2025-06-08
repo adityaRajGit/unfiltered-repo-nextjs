@@ -101,15 +101,18 @@ function Footer() {
                 {/* Bottom Row */}
                 <div className="flex flex-col md:flex-row justify-between items-center">
                     <p className="text-gray-500 text-sm mb-4 md:mb-0">
-                        © {new Date().getFullYear()} StayUnfiltered. All rights reserved.
+                        © 2025 Unfilter. All rights reserved.
                     </p>
 
                     <div className="flex space-x-8">
                         <Link href="#terms" className="text-gray-400 hover:text-teal-400 text-sm transition-colors">
                             Terms and Conditions
                         </Link>
-                        <Link href="#privacy" className="text-gray-400 hover:text-teal-400 text-sm transition-colors">
+                        <Link href="/pages/privacy" className="text-gray-400 hover:text-teal-400 text-sm transition-colors">
                             Privacy Policy
+                        </Link>
+                        <Link href="#privacy" className="text-gray-400 hover:text-teal-400 text-sm transition-colors">
+                            GDPR & India Compliance
                         </Link>
                     </div>
 

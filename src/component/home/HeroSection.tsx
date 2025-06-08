@@ -64,7 +64,7 @@ function HeroSection() {
             <div className="relative overflow-hidden rounded-2xl shadow-xl">
               <div className="absolute inset-0 bg-gradient-to-r from-teal-500/10 to-cyan-500/10 z-10"></div>
               <Image 
-                src="/dashboard.jpg" 
+                src="/landing.jpeg" 
                 alt="Dashboard" 
                 width={600} 
                 height={600} 

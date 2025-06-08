@@ -2,6 +2,12 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { FaUser, FaLock, FaEnvelope, FaPhone, FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import { login, signup } from '@/store/userSlice';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
+import { LoadingSpinnerWithOverlay } from '@/component/global/Loading';
+import { GoogleSignIn, GoogleSignUp } from '@/component/Authentication';
 
 const AuthPages = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -12,20 +18,76 @@ const AuthPages = () => {
     phone: '',
     password: ''
   });
+  const dispatch = useDispatch()
+  const router = useRouter()
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e : React.FormEvent) => {
+  const validateForm = () => {
+    const newErrors: { [key: string]: string } = {};
+
+    if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address.";
+    }
+
+    if (!formData.password || (formData.password.length < 8 && !isLogin)) {
+      newErrors.password = "Password must be at least 8 characters.";
+    }
+
+    if (!isLogin) {
+      if (!formData.name.trim()) {
+        newErrors.name = "Full name is required.";
+      }
+      if (!formData.phone || !/^\d{10}$/.test(formData.phone.replace(/\D/g, ''))) {
+        newErrors.phone = "Enter a valid 10-digit phone number.";
+      }
+    }
+    if (Object.keys(newErrors).length > 0) {
+      toast.error(Object.values(newErrors).join(' '));
+    }
+    return Object.keys(newErrors).length === 0;
+  };
+
+  function clearForm() {
+    setFormData({
+      name: '',
+      phone: '',
+      email: '',
+      password: '',
+    });
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isLogin) {
-      console.log('Logging in with:', { email: formData.email, password: formData.password });
-      // Login logic here
-    } else {
-      console.log('Signing up with:', formData);
-      // Signup logic here
+    setLoading(true)
+    if (validateForm()) {
+      if (isLogin) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const response = await dispatch(login(formData as any) as any);
+        if (response?.error) {
+          setLoading(false)
+          toast.error(response.error.message)
+        } else {
+          toast.success("User Logged in Successfully")
+          router.push('/')
+          clearForm()
+        }
+      } else {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const response = await dispatch(signup(formData as any) as any);
+        if (response?.error) {
+          setLoading(false)
+          toast.error(response.error.message);
+        } else {
+          toast.success('Account created successfully!');
+          router.push('/');
+          clearForm()
+        }
+      }
     }
   };
 
@@ -36,6 +98,9 @@ const AuthPages = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-teal-50 to-teal-100 flex flex-col items-center justify-center p-4">
       {/* Header */}
+      {
+        loading && <LoadingSpinnerWithOverlay />
+      }
       <header className="w-full max-w-md mb-8">
         <Link href="/" className="flex items-center justify-center space-x-1 text-2xl font-bold">
           <span className="text-teal-900">Stay</span>
@@ -50,23 +115,21 @@ const AuthPages = () => {
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden">
         {/* Tabs */}
         <div className="flex border-b">
-          <button 
-            className={`flex-1 py-4 font-medium text-center transition-colors duration-300 ${
-              isLogin 
-                ? 'bg-teal-600 text-white' 
-                : 'bg-white text-gray-600 hover:bg-teal-50'
-            }`}
-            onClick={() => setIsLogin(true)}
+          <button
+            className={`flex-1 py-4 font-medium text-center transition-colors duration-300 ${isLogin
+              ? 'bg-teal-600 text-white'
+              : 'bg-white text-gray-600 hover:bg-teal-50'
+              }`}
+            onClick={() => { setIsLogin(true); clearForm() }}
           >
             Login
           </button>
-          <button 
-            className={`flex-1 py-4 font-medium text-center transition-colors duration-300 ${
-              !isLogin 
-                ? 'bg-teal-600 text-white' 
-                : 'bg-white text-gray-600 hover:bg-teal-50'
-            }`}
-            onClick={() => setIsLogin(false)}
+          <button
+            className={`flex-1 py-4 font-medium text-center transition-colors duration-300 ${!isLogin
+              ? 'bg-teal-600 text-white'
+              : 'bg-white text-gray-600 hover:bg-teal-50'
+              }`}
+            onClick={() => { setIsLogin(false); clearForm() }}
           >
             Sign Up
           </button>
@@ -159,7 +222,7 @@ const AuthPages = () => {
                 className="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                 required
               />
-              <div 
+              <div
                 className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
                 onClick={togglePassword}
               >
@@ -170,22 +233,17 @@ const AuthPages = () => {
                 )}
               </div>
             </div>
-            {!isLogin && (
-              <p className="mt-2 text-xs text-gray-500">
-                Use 8+ characters with a mix of letters, numbers & symbols
-              </p>
-            )}
           </div>
 
           {isLogin && (
-            <div className="flex justify-between items-center mb-6">
-              <label className="flex items-center">
-                <input 
-                  type="checkbox" 
+            <div className="flex justify-end items-center mb-6">
+              {/* <label className="flex items-center">
+                <input
+                  type="checkbox"
                   className="form-checkbox h-4 w-4 text-teal-600 transition duration-150 ease-in-out rounded"
                 />
                 <span className="ml-2 text-sm text-gray-700">Remember me</span>
-              </label>
+              </label> */}
               <Link href="/forgot-password" className="text-sm text-teal-600 hover:text-teal-800 transition-colors">
                 Forgot password?
               </Link>
@@ -211,24 +269,18 @@ const AuthPages = () => {
               {isLogin ? 'Sign Up' : 'Login'}
             </button>
           </p>
-          
+
           <div className="mt-4 flex items-center justify-center">
             <div className="border-t border-gray-300 flex-grow"></div>
             <span className="px-3 text-gray-500 text-sm">Or continue with</span>
             <div className="border-t border-gray-300 flex-grow"></div>
           </div>
-          
-          <div className="mt-4 flex justify-center space-x-4">
-            <button className="p-3 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors">
-              <div className="bg-gray-200 border-2 border-dashed rounded-xl w-6 h-6" />
-            </button>
-            <button className="p-3 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors">
-              <div className="bg-gray-200 border-2 border-dashed rounded-xl w-6 h-6" />
-            </button>
-            <button className="p-3 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors">
-              <div className="bg-gray-200 border-2 border-dashed rounded-xl w-6 h-6" />
-            </button>
-          </div>
+
+          {
+            isLogin
+              ? <GoogleSignIn />
+              : <GoogleSignUp />
+          }
         </div>
       </div>
 

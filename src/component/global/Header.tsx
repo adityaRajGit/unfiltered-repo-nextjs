@@ -1,16 +1,49 @@
 "use client";
 import Link from 'next/link';
-import Image from 'next/image';
-import { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
+import { useState, useEffect, useRef } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import { FaUser, FaSignInAlt, FaTimes } from 'react-icons/fa';
+import { TOKEN } from '@/utils/enum';
+import { decodeToken } from '@/utils/decodeToken';
+import Image from 'next/image';
+
+interface UserData {
+    name: string;
+    email: string;
+    _id: string;
+    phone: string;
+    username: string;
+    profile_pic: string;
+}
 
 export const Header = () => {
-    const [user] = useState(false);
+    const [user, setUser] = useState(false);
+    const [userData, setUserData] = useState<UserData | null>(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const storedToken = typeof window !== 'undefined' ? localStorage.getItem(TOKEN) : null;
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const router = useRouter()
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+    };
+
+    const handleLogout = () => {
+        setLoading(true);
+        setTimeout(() => {
+            localStorage.removeItem(TOKEN);
+            setUser(false);
+            setUserData(null);
+            setIsDropdownOpen(false);
+            setLoading(false);
+            router.push('/');
+        }, 1000)
+    };
+
     const pathname = usePathname();
 
-    // Close mobile menu when path changes
     useEffect(() => {
         setIsMenuOpen(false);
     }, [pathname]);
@@ -21,8 +54,80 @@ export const Header = () => {
         { name: 'Community', href: '/community' },
         { name: 'Therapy', href: '/counsellor' },
         { name: 'About', href: '/pages/about' },
-        { name: 'FAQ', href: '/faq' },
+        { name: 'FAQ', href: '/pages/faq' },
     ];
+
+    const getInitials = (fullName: string): string => {
+        if (!fullName) return '';
+        const parts = fullName.trim().split(' ').filter(Boolean);
+        if (parts.length === 1) return parts[0][0].toUpperCase();
+        return (parts[0][0] + parts[1][0]).toUpperCase();
+    };
+
+
+    useEffect(() => {
+        if (storedToken !== null) {
+            const decodedToken = decodeToken(storedToken as string);
+            if (decodedToken?.userId) {
+                setUser(true);
+                setUserData(decodedToken?.userId);
+            }
+        }
+        setLoading(false);
+    }, [storedToken])
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                dropdownRef.current &&
+                !dropdownRef.current.contains(event.target as Node)
+            ) {
+                setIsDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+
+    if (loading) {
+        return (
+            <nav className="flex items-center justify-between px-4 sm:px-6 py-3 text-sm font-normal text-black bg-white shadow-sm sticky top-0 z-30">
+                {/* Mobile Menu Button Skeleton */}
+                <div className="md:hidden p-2 rounded-md text-gray-600">
+                    <div className="h-6 w-6 bg-gray-200 rounded-md animate-pulse" />
+                </div>
+
+                {/* Logo Skeleton */}
+                <div className="flex items-center space-x-1 font-semibold text-lg ml-2 md:ml-0">
+                    <div className="h-6 w-12 bg-gray-200 rounded animate-pulse" />
+                    <div className="h-6 w-16 bg-gray-200 rounded animate-pulse" />
+                </div>
+
+                {/* Navigation Links - Desktop Skeleton */}
+                <ul className="hidden md:flex items-center space-x-6">
+                    {[...Array(6)].map((_, i) => (
+                        <li key={i}>
+                            <div className={`w-16 h-4 bg-gray-200 rounded animate-pulse`} />
+                        </li>
+                    ))}
+                </ul>
+
+                {/* User Action Skeleton */}
+                <div className="flex items-center space-x-4">
+                    <div className="hidden sm:inline-flex">
+                        <div className="w-20 h-9 bg-gray-200 rounded-full animate-pulse" />
+                    </div>
+                    <div className="md:hidden flex">
+                        <div className="w-9 h-9 bg-gray-200 rounded-full animate-pulse" />
+                    </div>
+                </div>
+            </nav>
+        );
+    }
 
     return (
         <>
@@ -57,8 +162,8 @@ export const Header = () => {
                                 <Link
                                     href={item.href}
                                     className={`flex font-semibold items-center py-2 px-3 rounded-lg ${pathname === item.href
-                                            ? 'bg-teal-50 text-teal-600'
-                                            : 'hover:bg-gray-50 text-gray-700'
+                                        ? 'bg-teal-50 text-teal-600'
+                                        : 'hover:bg-gray-50 text-gray-700'
                                         }`}
                                 >
                                     {item.name}
@@ -115,8 +220,8 @@ export const Header = () => {
                             <Link
                                 href={item.href}
                                 className={`py-2 px-1 font-semibold transition-colors duration-200 ${pathname === item.href
-                                        ? 'text-teal-600 border-b-2 border-teal-600'
-                                        : 'text-gray-600 hover:text-teal-600'
+                                    ? 'text-teal-600 border-b-2 border-teal-600'
+                                    : 'text-gray-600 hover:text-teal-600'
                                     }`}
                             >
                                 {item.name}
@@ -128,17 +233,55 @@ export const Header = () => {
                 {/* User Actions */}
                 <div className="flex items-center space-x-4">
                     {user ? (
-                        <Link href="/profile" className="flex items-center">
-                            <div className="w-9 h-9 rounded-full bg-gray-100 border-2 border-teal-500 overflow-hidden">
-                                <Image
-                                    src="/avatar-placeholder.png"
-                                    alt="User Profile"
-                                    width={36}
-                                    height={36}
-                                    className="object-cover"
-                                />
-                            </div>
-                        </Link>
+                        <div className="relative">
+                            <button
+                                onClick={toggleDropdown}
+                                className="w-9 h-9 rounded-full bg-gray-100 border-2 border-teal-500 overflow-hidden flex items-center justify-center focus:outline-none"
+                            >
+                                {userData?.profile_pic ? (
+                                    <Image src={userData.profile_pic} alt="Profile" className="w-full h-full object-cover" />
+                                ) : (
+                                    <span className="text-teal-600 font-bold text-sm uppercase">
+                                        {getInitials(userData?.name || '')}
+                                    </span>
+                                )}
+                            </button>
+
+                            {isDropdownOpen && (
+                                <div ref={dropdownRef} className="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                                    <div className="p-4 border-b border-gray-100 flex items-center space-x-3">
+                                        <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-100 border border-teal-500 flex items-center justify-center">
+                                            {userData?.profile_pic ? (
+                                                <Image src={userData.profile_pic} alt="Profile" className="w-full h-full object-cover" />
+                                            ) : (
+                                                <span className="text-teal-600 font-bold text-lg uppercase">
+                                                    {getInitials(userData?.name || '')}
+                                                </span>
+                                            )}
+                                        </div>
+                                        <div>
+                                            <p className="font-semibold text-sm">{userData?.name}</p>
+                                            <p className="text-xs text-gray-500">@{userData?.username}</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col p-2">
+                                        <Link
+                                            href="/profile"
+                                            className="text-sm px-4 py-2 hover:bg-gray-100 rounded-md transition"
+                                            onClick={() => setIsDropdownOpen(false)}
+                                        >
+                                            Manage Your Account
+                                        </Link>
+                                        <button
+                                            onClick={handleLogout}
+                                            className="text-sm px-4 py-2 text-left hover:bg-gray-100 rounded-md transition text-red-500"
+                                        >
+                                            Logout
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     ) : (
                         <>
                             <Link
@@ -160,3 +303,4 @@ export const Header = () => {
         </>
     );
 };
+
