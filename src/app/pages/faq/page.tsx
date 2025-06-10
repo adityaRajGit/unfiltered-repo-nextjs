@@ -84,6 +84,10 @@ const FAQPage = () => {
                 {
                     question: "Do you share my data with third parties?",
                     answer: "No. We do not share, rent, or sell your data without your explicit consent. Some third-party services are used to run the platform securely, but they are bound by strict privacy agreements."
+                },
+                {
+                    question: "Are you compliant with DPDP and GDPR regulations?",
+                    answer: "Yes. We comply with both DPDP (India) and GDPR (EU) regulations. We collect and process only the data necessary for service delivery, with your consent. You have full rights over your data, including access, correction, and deletion. All data is handled securely and used only for intended purposes, with no unauthorized sharing."
                 }
             ]
         },

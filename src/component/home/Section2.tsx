@@ -14,8 +14,8 @@ function Section2() {
             img: '/therapy2.jpeg',
         },
         {
-            title: "Teen Therapy",
-            desc: "Support for adolescents dealing with emotional challenges, school stress, and identity issues.",
+            title: "Group Therapy",
+            desc: "Led by certified mental health professionals, encourages open communication and emotional growth.",
             img: '/therapy3.jpeg',
         },
         {
