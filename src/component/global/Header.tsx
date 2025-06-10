@@ -266,7 +266,7 @@ export const Header = () => {
                                     </div>
                                     <div className="flex flex-col p-2">
                                         <Link
-                                            href="/profile"
+                                            href="/pages/account"
                                             className="text-sm px-4 py-2 hover:bg-gray-100 rounded-md transition"
                                             onClick={() => setIsDropdownOpen(false)}
                                         >

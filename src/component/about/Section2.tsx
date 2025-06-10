@@ -24,7 +24,7 @@ function Section2() {
                             <div className="bg-gray-200 border-2 border-dashed rounded-xl w-full h-72" />
                             <div className="bg-gray-200 border-2 border-dashed rounded-xl w-full h-64 mt-8" />
                         </div>
-                        <div className="absolute -bottom-6 -right-6 bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+                        <div className="absolute -bottom-6 right-0 sm:-right-6 bg-white p-6 rounded-xl shadow-lg border border-gray-100">
                             <div className="text-4xl font-bold text-teal-600">2018</div>
                             <p className="text-sm text-gray-600">Founded in Bangalore</p>
                         </div>

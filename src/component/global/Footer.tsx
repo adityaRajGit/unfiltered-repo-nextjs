@@ -24,7 +24,7 @@ function Footer() {
                                 <input
                                     type="email"
                                     placeholder="Enter your email"
-                                    className="flex-grow py-3 px-4 rounded-l-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                                    className="flex-grow w-[54%] sm:w-auto py-3 px-4 rounded-l-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500"
                                 />
                                 <button className="bg-teal-600 hover:bg-teal-700 text-white px-6 rounded-r-lg transition duration-300">
                                     Submit
