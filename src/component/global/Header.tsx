@@ -65,23 +65,24 @@ export const Header = () => {
 
 
     useEffect(() => {
-    const fetchUserData = async () => {
-        if (storedToken) {
-        try {
-            const decoded = decodeToken(storedToken);
-            const userId = decoded?.userId;
-            if (userId) {
-            const response = await axios.get(`${backend}/user/${userId}`);
-            if (response.data?.data?.user) {
-                setUserData(response.data.data.user);
-                setUser(true);
-            }
-            }
-        } catch (error) {
-            console.error("Error fetching user data:", error);
+  const fetchUserData = async () => {
+    if (storedToken) {
+      try {
+        const response = await axios.get(`${backend}/user/me`, {
+          headers: {
+            Authorization: `Bearer ${storedToken}`
+          }
+        });
+        
+        if (response.data?.data?.user) {
+          setUserData(response.data.data.user);
+          setUser(true);
         }
-        }
-        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    }
+    setLoading(false);
   };
 
   fetchUserData();

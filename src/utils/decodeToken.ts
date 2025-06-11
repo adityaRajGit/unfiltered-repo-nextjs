@@ -20,11 +20,7 @@ interface MyTokenPayload {
 
 export const decodeToken = (token: string): MyTokenPayload | null => {
   try {
-    const decoded = jwtDecode<MyTokenPayload>(token);
-    return {
-      ...decoded,
-      userId: decoded.userId || decoded.userIdObj?.userId,
-    };
+    return jwtDecode<MyTokenPayload>(token);
   } catch (error) {
     console.error("Token decoding failed:", error);
     return null;
