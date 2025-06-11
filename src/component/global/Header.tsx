@@ -72,6 +72,7 @@ export const Header = () => {
         }
         } catch (e) {
         cleanStoredToken();
+        console.log(e);
         }
     }
     }, []);
