@@ -18,7 +18,7 @@ export const GoogleSignUp = () => {
         try {
             const res = await axios.post(`${backend}/user/google-auth`, { idToken });
             if (res.status === 200) {
-                localStorage.setItem(TOKEN, JSON.stringify(res.data.token));
+                localStorage.setItem(TOKEN, res.data.data.token);
                 router.push("/");
                 toast.success("User Created Successfully");
             }

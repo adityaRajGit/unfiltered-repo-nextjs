@@ -6,6 +6,7 @@ import { FaUser, FaSignInAlt, FaTimes } from 'react-icons/fa';
 import { TOKEN } from '@/utils/enum';
 import { decodeToken } from '@/utils/decodeToken';
 import Image from 'next/image';
+import axios from 'axios';
 
 interface UserData {
     name: string;
@@ -15,7 +16,7 @@ interface UserData {
     username: string;
     profile_pic: string;
 }
-
+const backend = process.env.NEXT_PUBLIC_BACKEND_URL as string;
 export const Header = () => {
     const [user, setUser] = useState(false);
     const [userData, setUserData] = useState<UserData | null>(null);
@@ -31,16 +32,14 @@ export const Header = () => {
     };
 
     const handleLogout = () => {
-        setLoading(true);
-        setTimeout(() => {
-            localStorage.removeItem(TOKEN);
-            setUser(false);
-            setUserData(null);
-            setIsDropdownOpen(false);
-            setLoading(false);
-            router.push('/');
-        }, 1000)
-    };
+  setLoading(true);
+  localStorage.removeItem(TOKEN);
+  setUser(false);
+  setUserData(null);
+  setIsDropdownOpen(false);
+  router.push('/');
+  setLoading(false); 
+};
 
     const pathname = usePathname();
 
@@ -66,15 +65,28 @@ export const Header = () => {
 
 
     useEffect(() => {
-        if (storedToken !== null) {
-            const decodedToken = decodeToken(storedToken as string);
-            if (decodedToken?.userId) {
-                setUser(true);
-                setUserData(decodedToken?.userId);
+    const fetchUserData = async () => {
+      if (storedToken) {
+        try {
+          const response = await axios.get(`${backend}/user/me`, {
+            headers: {
+              Authorization: `Bearer ${storedToken}`
             }
+          });
+          
+          if (response.data?.data?.user) {
+            setUserData(response.data.data.user);
+            setUser(true);
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
         }
-        setLoading(false);
-    }, [storedToken])
+      }
+      setLoading(false);
+    };
+
+    fetchUserData();
+  }, [storedToken]);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
