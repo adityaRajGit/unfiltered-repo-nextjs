@@ -6,7 +6,6 @@ import { FaUser, FaSignInAlt, FaTimes } from 'react-icons/fa';
 import { TOKEN } from '@/utils/enum';
 import Image from 'next/image';
 import axios from 'axios';
-import { decodeToken } from '@/utils/decodeToken';
 
 interface UserData {
     name: string;
