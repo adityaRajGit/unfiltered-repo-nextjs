@@ -6,6 +6,7 @@ import { FaUser, FaSignInAlt, FaTimes } from 'react-icons/fa';
 import { TOKEN } from '@/utils/enum';
 import Image from 'next/image';
 import axios from 'axios';
+import { decodeToken } from '@/utils/decodeToken';
 
 interface UserData {
     name: string;
@@ -65,27 +66,26 @@ export const Header = () => {
 
     useEffect(() => {
     const fetchUserData = async () => {
-      if (storedToken) {
+        if (storedToken) {
         try {
-          const response = await axios.get(`${backend}/user/me`, {
-            headers: {
-              Authorization: `Bearer ${storedToken}`
+            const decoded = decodeToken(storedToken);
+            const userId = decoded?.userId;
+            if (userId) {
+            const response = await axios.get(`${backend}/user/${userId}`);
+            if (response.data?.data?.user) {
+                setUserData(response.data.data.user);
+                setUser(true);
             }
-          });
-          
-          if (response.data?.data?.user) {
-            setUserData(response.data.data.user);
-            setUser(true);
-          }
+            }
         } catch (error) {
-          console.error("Error fetching user data:", error);
+            console.error("Error fetching user data:", error);
         }
-      }
-      setLoading(false);
-    };
+        }
+        setLoading(false);
+  };
 
-    fetchUserData();
-  }, [storedToken]);
+  fetchUserData();
+}, [storedToken]);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
