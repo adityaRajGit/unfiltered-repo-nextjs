@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { FaUser, FaSignInAlt, FaTimes } from 'react-icons/fa';
 import { TOKEN } from '@/utils/enum';
-import { decodeToken } from '@/utils/decodeToken';
 import Image from 'next/image';
 import axios from 'axios';
 
