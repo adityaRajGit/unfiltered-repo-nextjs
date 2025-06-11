@@ -31,13 +31,8 @@ export const Header = () => {
     };
 
     const handleLogout = () => {
-  setLoading(true);
-  localStorage.removeItem(TOKEN);
-  setUser(false);
-  setUserData(null);
-  setIsDropdownOpen(false);
+  cleanStoredToken();
   router.push('/');
-  setLoading(false); 
 };
 
     const pathname = usePathname();
@@ -61,7 +56,25 @@ export const Header = () => {
         if (parts.length === 1) return parts[0][0].toUpperCase();
         return (parts[0][0] + parts[1][0]).toUpperCase();
     };
+    const cleanStoredToken = () => {
+    localStorage.removeItem(TOKEN);
+    setUser(false);
+    setUserData(null);
+    };
 
+    useEffect(() => {
+    const token = localStorage.getItem(TOKEN);
+    if (token) {
+        try {
+        // Basic token validation
+        if (token.split('.').length !== 3) {
+            cleanStoredToken();
+        }
+        } catch (e) {
+        cleanStoredToken();
+        }
+    }
+    }, []);
 
     useEffect(() => {
   const fetchUserData = async () => {
