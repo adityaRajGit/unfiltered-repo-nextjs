@@ -6,6 +6,7 @@ import { FaUser, FaSignInAlt, FaTimes } from 'react-icons/fa';
 import { TOKEN } from '@/utils/enum';
 import Image from 'next/image';
 import axios from 'axios';
+import { validateToken } from '@/utils/tokenUtils';
 
 interface UserData {
     name: string;
@@ -40,6 +41,13 @@ export const Header = () => {
     useEffect(() => {
         setIsMenuOpen(false);
     }, [pathname]);
+
+    
+    useEffect(() => {
+      if (storedToken && !validateToken(storedToken)) {
+        localStorage.removeItem(TOKEN);
+      }
+    }, []);
 
     const navItems = [
         { name: 'Home', href: '/' },
@@ -93,6 +101,9 @@ export const Header = () => {
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
+        if (axios.isAxiosError(error) && error.response?.status === 401) {
+          localStorage.removeItem(TOKEN);
+        }
       }
     }
     setLoading(false);
