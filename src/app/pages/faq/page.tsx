@@ -11,116 +11,210 @@ const FAQPage = () => {
     };
 
     const faqCategories = [
-        {
-            title: "General",
-            icon: <FaUsers className="text-teal-600 text-xl" />,
-            questions: [
-                {
-                    question: "What is StayUnfiltered?",
-                    answer: "StayUnfiltered is a mental wellness platform that offers two key features: a Community Space to share thoughts, feelings, and stories—anonymously or openly, and Therapy Services with licensed professionals for one-on-one support."
-                },
-                {
-                    question: "Is StayUnfiltered a substitute for therapy?",
-                    answer: "The Community is not therapy but a safe space for peer support. For professional help, our Therapy Services connect you with certified mental health experts."
-                },
-                {
-                    question: "Who can use StayUnfiltered?",
-                    answer: "StayUnfiltered is intended for individuals aged 16 and above. If you're under 18, therapy sessions may require guardian consent, depending on applicable law."
-                }
-            ]
-        },
-        {
-            title: "Community Features",
-            icon: <FaUserShield className="text-teal-600 text-xl" />,
-            questions: [
-                {
-                    question: "Can I post anonymously?",
-                    answer: "Yes. You can post publicly under your username or completely anonymously. You're in control of what and how you share."
-                },
-                {
-                    question: "Will others see my identity?",
-                    answer: "No. If you choose anonymity, your real identity is not visible to anyone—not even our moderators."
-                },
-                {
-                    question: "Is the community moderated?",
-                    answer: "Yes, lightly. We use a combination of AI filters and human moderation to keep the platform safe, respectful, and free from abuse."
-                }
-            ]
-        },
-        {
-            title: "Therapy Services",
-            icon: <FaHeadset className="text-teal-600 text-xl" />,
-            questions: [
-                {
-                    question: "How do I book a therapy session?",
-                    answer: "You can browse our therapist directory based on language, expertise, and availability. Select a therapist and book your session online."
-                },
-                {
-                    question: "Are your therapists certified?",
-                    answer: "Yes. All therapists on StayUnfiltered are qualified, licensed professionals, and verified by our team."
-                },
-                {
-                    question: "Is therapy confidential?",
-                    answer: "Absolutely. All therapy sessions are private, conducted on secure, encrypted platforms, and never shared with anyone else—not even StayUnfiltered staff."
-                },
-                {
-                    question: "How much does therapy cost?",
-                    answer: "Fees vary by therapist and session length. We aim to keep prices affordable and transparent. Some therapists may offer discounted rates for students or low-income individuals."
-                }
-            ]
-        },
-        {
-            title: "Data Privacy & Security",
-            icon: <FaLock className="text-teal-600 text-xl" />,
-            questions: [
-                {
-                    question: "Is my data safe on StayUnfiltered?",
-                    answer: "Yes. We follow Indian data protection laws and use secure servers and encryption to protect your information. Therapy data is treated with high confidentiality."
-                },
-                {
-                    question: "Can I delete my account and data?",
-                    answer: "Yes. You can delete your account at any time. Once deleted, your data is permanently removed unless required by law to retain (e.g., therapy records for legal compliance)."
-                },
-                {
-                    question: "Do you share my data with third parties?",
-                    answer: "No. We do not share, rent, or sell your data without your explicit consent. Some third-party services are used to run the platform securely, but they are bound by strict privacy agreements."
-                },
-                {
-                    question: "Are you compliant with DPDP and GDPR regulations?",
-                    answer: "Yes. We comply with both DPDP (India) and GDPR (EU) regulations. We collect and process only the data necessary for service delivery, with your consent. You have full rights over your data, including access, correction, and deletion. All data is handled securely and used only for intended purposes, with no unauthorized sharing."
-                }
-            ]
-        },
-        {
-            title: "Emergency & Ethical Support",
-            icon: <FaShieldAlt className="text-teal-600 text-xl" />,
-            questions: [
-                {
-                    question: "What if I am in crisis?",
-                    answer: (
-                        <div>
-                            <p>StayUnfiltered is not a crisis service. If you are in immediate danger or suicidal distress, please contact national mental health helplines such as:</p>
-                            <ul className="mt-3 space-y-2">
-                                <li className="flex items-start">
-                                    <span className="font-medium mr-2">iCall:</span>
-                                    <span>+91 9152987821</span>
-                                </li>
-                                <li className="flex items-start">
-                                    <span className="font-medium mr-2">AASRA:</span>
-                                    <span>+91 9820466726</span>
-                                </li>
-                            </ul>
-                            <p className="mt-3">We also list verified emergency contacts in the app/website.</p>
-                        </div>
-                    )
-                },
-                {
-                    question: "Can I report inappropriate content?",
-                    answer: "Yes. Use the 'Report' button on any post or comment. We take every report seriously and act quickly to ensure community safety."
-                }
-            ]
-        }
-    ];
+    {
+        title: "General",
+        icon: <FaUsers className="text-teal-600 text-xl" />,
+        questions: [
+            {
+                question: "What is StayUnfiltered?",
+                answer:
+                    "StayUnfiltered is a mental wellness platform that offers two key features: a Community Space to share thoughts, feelings, and stories—anonymously or openly, and Therapy Services with licensed professionals for one-on-one support."
+            },
+            {
+                question: "Is StayUnfiltered a substitute for therapy?",
+                answer:
+                    "The Community is not therapy but a safe space for peer support. For professional help, our Therapy Services connect you with certified mental health experts."
+            },
+            {
+                question: "Who can use StayUnfiltered?",
+                answer:
+                    "StayUnfiltered is intended for individuals aged 16 and above. If you're under 18, therapy sessions may require guardian consent, depending on applicable law."
+            }
+        ]
+    },
+    {
+        title: "Community Features",
+        icon: <FaUserShield className="text-teal-600 text-xl" />,
+        questions: [
+            {
+                question: "Can I post anonymously?",
+                answer:
+                    "Yes. You can post publicly under your username or completely anonymously. You're in control of what and how you share."
+            },
+            {
+                question: "Will others see my identity?",
+                answer:
+                    "No. If you choose anonymity, your real identity is not visible to anyone—not even our moderators."
+            },
+            {
+                question: "Is the community moderated?",
+                answer:
+                    "Yes, lightly. We use a combination of AI filters and human moderation to keep the platform safe, respectful, and free from abuse."
+            }
+        ]
+    },
+    {
+        title: "Therapy Services",
+        icon: <FaHeadset className="text-teal-600 text-xl" />,
+        questions: [
+            {
+                question: "How do I book a therapy session?",
+                answer:
+                    "You can browse our therapist directory based on language, expertise, and availability. Select a therapist and book your session online."
+            },
+            {
+                question: "Are your therapists certified?",
+                answer:
+                    "Yes. All therapists on StayUnfiltered are qualified, licensed professionals, and verified by our team."
+            },
+            {
+                question: "Is therapy confidential?",
+                answer:
+                    "Absolutely. All therapy sessions are private, conducted on secure, encrypted platforms, and never shared with anyone else—not even StayUnfiltered staff."
+            },
+            {
+                question: "How much does therapy cost?",
+                answer:
+                    "Fees vary by therapist and session length. We aim to keep prices affordable and transparent. Some therapists may offer discounted rates for students or low-income individuals."
+            },
+            {
+                question: "What types of therapy does Unfiltered provide?",
+                answer:
+                    "Unfiltered offers a full spectrum of therapy services including individual (1-on-1) therapy, couples/relationship counseling, family therapy, group sessions, and coaching for stress, burnout, and life transitions."
+            },
+            {
+                question: "How are clients matched with therapists?",
+                answer:
+                    "Clients are matched based on their concerns, language preference, cultural background, and scheduling needs to ensure personalized, culturally competent care."
+            },
+            {
+                question: "What sets Unfiltered apart in the mental health space?",
+                answer:
+                    "Global presence with cultural sensitivity, flexible therapy plans, holistic services including coaching, and a mission rooted in empathy and impact."
+            }
+        ]
+    },
+    {
+        title: "Data Privacy & Security",
+        icon: <FaLock className="text-teal-600 text-xl" />,
+        questions: [
+            {
+                question: "Is my data safe on StayUnfiltered?",
+                answer:
+                    "Yes. We follow Indian data protection laws and use secure servers and encryption to protect your information. Therapy data is treated with high confidentiality."
+            },
+            {
+                question: "Can I delete my account and data?",
+                answer:
+                    "Yes. You can delete your account at any time. Once deleted, your data is permanently removed unless required by law to retain (e.g., therapy records for legal compliance)."
+            },
+            {
+                question: "Do you share my data with third parties?",
+                answer:
+                    "No. We do not share, rent, or sell your data without your explicit consent. Some third-party services are used to run the platform securely, but they are bound by strict privacy agreements."
+            },
+            {
+                question: "Are you compliant with DPDP and GDPR regulations?",
+                answer:
+                    "Yes. We comply with both DPDP (India) and GDPR (EU) regulations. We collect and process only the data necessary for service delivery, with your consent. You have full rights over your data, including access, correction, and deletion. All data is handled securely and used only for intended purposes, with no unauthorized sharing."
+            }
+        ]
+    },
+    {
+        title: "Emergency & Ethical Support",
+        icon: <FaShieldAlt className="text-teal-600 text-xl" />,
+        questions: [
+            {
+                question: "What if I am in crisis?",
+                answer: (
+                    <div>
+                        <p>StayUnfiltered is not a crisis service. If you are in immediate danger or suicidal distress, please contact national mental health helplines such as:</p>
+                        <ul className="mt-3 space-y-2">
+                            <li className="flex items-start">
+                                <span className="font-medium mr-2">iCall:</span>
+                                <span>+91 9152987821</span>
+                            </li>
+                            <li className="flex items-start">
+                                <span className="font-medium mr-2">AASRA:</span>
+                                <span>+91 9820466726</span>
+                            </li>
+                        </ul>
+                        <p className="mt-3">We also list verified emergency contacts in the app/website.</p>
+                    </div>
+                )
+            },
+            {
+                question: "Can I report inappropriate content?",
+                answer:
+                    "Yes. Use the 'Report' button on any post or comment. We take every report seriously and act quickly to ensure community safety."
+            }
+        ]
+    },
+    {
+        title: "Global Therapy & Confidentiality",
+        icon: <FaHeadset className="text-teal-600 text-xl" />,
+        questions: [
+            {
+                question: "Are your services available globally?",
+                answer:
+                    "Yes. Unfiltered is headquartered in India, but our professionals serve clients worldwide—U.S., Singapore, Indonesia, and more. Sessions are virtual for accessibility."
+            },
+            {
+                question: "Is Unfiltered therapy safe and confidential?",
+                answer:
+                    "Absolutely. All sessions are held via secure, encrypted platforms, adhering to international privacy standards. Confidentiality is a top priority."
+            }
+        ]
+    },
+    {
+        title: "Corporate Wellness Programs",
+        icon: <FaUsers className="text-teal-600 text-xl" />,
+        questions: [
+            {
+                question: "Does Unfiltered offer services to businesses and organizations?",
+                answer:
+                    "Yes. We design customized mental wellness programs for companies, including EAPs, therapy access, workshops, and team well-being dashboards."
+            },
+            {
+                question: "Why should organizations choose Unfiltered?",
+                answer:
+                    "We offer global solutions for remote teams, licensed workplace mental health experts, flexible packages, and impact tracking through detailed reports."
+            },
+            {
+                question: "Do you serve both Indian and international companies?",
+                answer:
+                    "Yes. Unfiltered works with enterprises in India and globally, bringing regional insight and global expertise to every engagement."
+            }
+        ]
+    },
+    {
+        title: "Support Community & Webinars",
+        icon: <FaUserShield className="text-teal-600 text-xl" />,
+        questions: [
+            {
+                question: "What is the Unfiltered support community?",
+                answer:
+                    "Our support community fosters shared healing through expert-led group sessions and webinars that promote emotional connection and guidance."
+            },
+            {
+                question: "What topics are covered in community webinars?",
+                answer:
+                    "Our sessions include emotional resilience, burnout management, relationship navigation, career stress, mindfulness, and more."
+            },
+            {
+                question: "Who can attend the webinars?",
+                answer:
+                    "Everyone is welcome—whether in India or abroad. Some sessions are free, while others may have a small fee depending on the topic."
+            },
+            {
+                question: "How often do these sessions take place?",
+                answer:
+                    "We host sessions bi-weekly to monthly, with plans to expand frequency as our community grows."
+            }
+        ]
+    }
+];
+
 
     const allQuestions = faqCategories.flatMap(category =>
         category.questions.map(q => ({ ...q, category: category.title }))

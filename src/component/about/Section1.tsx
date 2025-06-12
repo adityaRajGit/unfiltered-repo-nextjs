@@ -12,12 +12,13 @@ function Section1() {
             <div className="max-w-7xl mx-auto relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <div>
-                        <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                            Our Mission: Mental Wellness Without Barriers
+                        <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">                            
+                            Let`s Redefine Mental Health — Together.
                         </h1>
                         <p className="text-xl text-teal-100 mb-8 max-w-2xl">
-                            At StayUnfiltered, we&apos;re building a world where everyone has access to compassionate,
-                            personalized mental healthcare that fits their life and needs.
+                            We`re not here to fix you.
+                            We`re here to hold space for you — just as you are. With empathy, professionalism, and zero judgment.
+
                         </p>
                         <div className="flex flex-wrap gap-4">
                             <Link href="/services" className="px-8 py-3 bg-white text-teal-700 font-medium rounded-full hover:bg-gray-100 transition-colors">
@@ -32,7 +33,7 @@ function Section1() {
                     <div className="flex justify-center">
                         <div className="relative w-full max-w-md h-80 md:h-96 rounded-2xl overflow-hidden shadow-2xl">
                             <Image
-                                src=""
+                                src="/about/Teamwork_AboutUs.jpg"
                                 alt="Team discussion"
                                 layout="fill"
                                 objectFit="cover"
