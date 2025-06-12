@@ -13,11 +13,11 @@ function Section1() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <div>
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">                            
-                            Let`s Redefine Mental Health — Together.
+                            Let's Redefine Mental Health — Together.
                         </h1>
                         <p className="text-xl text-teal-100 mb-8 max-w-2xl">
-                            We`re not here to fix you.
-                            We`re here to hold space for you — just as you are. With empathy, professionalism, and zero judgment.
+                            We're not here to fix you.
+                            We're here to hold space for you — just as you are. With empathy, professionalism, and zero judgment.
 
                         </p>
                         <div className="flex flex-wrap gap-4">

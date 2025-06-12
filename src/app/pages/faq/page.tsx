@@ -33,23 +33,23 @@ const FAQPage = () => {
         ]
     },
     {
-        title: "Community Features",
-        icon: <FaUserShield className="text-teal-600 text-xl" />,
+        title: "Corporate Wellness Programs",
+        icon: <FaUsers className="text-teal-600 text-xl" />,
         questions: [
             {
-                question: "Can I post anonymously?",
+                question: "Does Unfiltered offer services to businesses and organizations?",
                 answer:
-                    "Yes. You can post publicly under your username or completely anonymously. You're in control of what and how you share."
+                    "Yes. We design customized mental wellness programs for companies, including EAPs, therapy access, workshops, and team well-being dashboards."
             },
             {
-                question: "Will others see my identity?",
+                question: "Why should organizations choose Unfiltered?",
                 answer:
-                    "No. If you choose anonymity, your real identity is not visible to anyone—not even our moderators."
+                    "We offer global solutions for remote teams, licensed workplace mental health experts, flexible packages, and impact tracking through detailed reports."
             },
             {
-                question: "Is the community moderated?",
+                question: "Do you serve both Indian and international companies?",
                 answer:
-                    "Yes, lightly. We use a combination of AI filters and human moderation to keep the platform safe, respectful, and free from abuse."
+                    "Yes. Unfiltered works with enterprises in India and globally, bringing regional insight and global expertise to every engagement."
             }
         ]
     },
@@ -91,6 +91,27 @@ const FAQPage = () => {
                 question: "What sets Unfiltered apart in the mental health space?",
                 answer:
                     "Global presence with cultural sensitivity, flexible therapy plans, holistic services including coaching, and a mission rooted in empathy and impact."
+            }
+        ]
+    },
+    {
+        title: "Community Features",
+        icon: <FaUserShield className="text-teal-600 text-xl" />,
+        questions: [
+            {
+                question: "Can I post anonymously?",
+                answer:
+                    "Yes. You can post publicly under your username or completely anonymously. You're in control of what and how you share."
+            },
+            {
+                question: "Will others see my identity?",
+                answer:
+                    "No. If you choose anonymity, your real identity is not visible to anyone—not even our moderators."
+            },
+            {
+                question: "Is the community moderated?",
+                answer:
+                    "Yes, lightly. We use a combination of AI filters and human moderation to keep the platform safe, respectful, and free from abuse."
             }
         ]
     },
@@ -163,27 +184,6 @@ const FAQPage = () => {
                 question: "Is Unfiltered therapy safe and confidential?",
                 answer:
                     "Absolutely. All sessions are held via secure, encrypted platforms, adhering to international privacy standards. Confidentiality is a top priority."
-            }
-        ]
-    },
-    {
-        title: "Corporate Wellness Programs",
-        icon: <FaUsers className="text-teal-600 text-xl" />,
-        questions: [
-            {
-                question: "Does Unfiltered offer services to businesses and organizations?",
-                answer:
-                    "Yes. We design customized mental wellness programs for companies, including EAPs, therapy access, workshops, and team well-being dashboards."
-            },
-            {
-                question: "Why should organizations choose Unfiltered?",
-                answer:
-                    "We offer global solutions for remote teams, licensed workplace mental health experts, flexible packages, and impact tracking through detailed reports."
-            },
-            {
-                question: "Do you serve both Indian and international companies?",
-                answer:
-                    "Yes. Unfiltered works with enterprises in India and globally, bringing regional insight and global expertise to every engagement."
             }
         ]
     },
