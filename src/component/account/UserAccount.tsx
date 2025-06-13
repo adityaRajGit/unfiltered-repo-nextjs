@@ -137,7 +137,12 @@ const UserProfilePage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-teal-50 to-white py-8 px-4">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
+        {/* New Personalized Greeting Header */}
+        <div className="text-center mb-6">
+          <h2 className="text-4xl font-bold text-teal-600">Welcome, {userData.name}!</h2>
+          <p className="mt-2 text-lg text-gray-700">Your journey to mental wellness starts here.</p>
+        </div>
+        {/* Existing Profile Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-4 md:mb-0">My Profile</h1>
           <div className="flex space-x-3">
