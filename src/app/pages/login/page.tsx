@@ -1,17 +1,19 @@
 "use client";
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { FaUser, FaLock, FaEnvelope, FaPhone, FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaUser, FaLock, FaEnvelope, FaPhone, FaEye, FaEyeSlash, FaUserMd, FaUserInjured } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { login, signup } from '@/store/userSlice';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { LoadingSpinnerWithOverlay } from '@/component/global/Loading';
 import { GoogleSignIn, GoogleSignUp } from '@/component/Authentication';
+import { loginTherapist, signupTherapist } from '@/store/therapistSlice';
 
 const AuthPages = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const [role, setRole] = useState<'user' | 'therapist'>('user'); // Now used in both login and signup
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -59,6 +61,7 @@ const AuthPages = () => {
       email: '',
       password: '',
     });
+    setRole('user');
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -66,26 +69,56 @@ const AuthPages = () => {
     setLoading(true)
     if (validateForm()) {
       if (isLogin) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const response = await dispatch(login(formData as any) as any);
-        if (response?.error) {
-          setLoading(false)
-          toast.error(response.error.message)
+        if (role === 'user') {
+          const loginData = { ...formData, role };
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const response = await dispatch(login(loginData as any) as any);
+          if (response?.error) {
+            setLoading(false)
+            toast.error(response.error.message)
+          } else {
+            toast.success("User Logged in Successfully")
+            router.push('/')
+            clearForm()
+          }
         } else {
-          toast.success("User Logged in Successfully")
-          router.push('/')
-          clearForm()
+          const loginData = { ...formData, role };
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const response = await dispatch(loginTherapist(loginData as any) as any);
+          if (response?.error) {
+            setLoading(false)
+            toast.error(response.error.message)
+          } else {
+            toast.success("Therapist Logged in Successfully")
+            router.push('/')
+            clearForm()
+          }
         }
       } else {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const response = await dispatch(signup(formData as any) as any);
-        if (response?.error) {
-          setLoading(false)
-          toast.error(response.error.message);
+        if (role === 'user') {
+          const signupData = { ...formData, role };
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const response = await dispatch(signup(signupData as any) as any);
+          if (response?.error) {
+            setLoading(false)
+            toast.error(response.error.message);
+          } else {
+            toast.success('Account created successfully!');
+            router.push('/');
+            clearForm()
+          }
         } else {
-          toast.success('Account created successfully!');
-          router.push('/');
-          clearForm()
+          const signupData = { ...formData, role };
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const response = await dispatch(signupTherapist(signupData as any) as any);
+          if (response?.error) {
+            setLoading(false)
+            toast.error(response.error.message);
+          } else {
+            toast.success('Account created successfully!');
+            router.push('/');
+            clearForm()
+          }
         }
       }
     }
@@ -159,6 +192,48 @@ const AuthPages = () => {
               </div>
             </div>
           )}
+
+          {/* Role Selection - NOW SHOWN FOR BOTH LOGIN AND SIGNUP */}
+          <div className="mb-6">
+            <label className="block text-gray-700 mb-2 font-medium">
+              {isLogin ? 'I am logging in as:' : 'I am signing up as:'}
+            </label>
+            <div className="flex space-x-4">
+              <button
+                type="button"
+                onClick={() => setRole('user')}
+                className={`flex-1 flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all ${role === 'user'
+                  ? 'border-teal-500 bg-teal-50'
+                  : 'border-gray-200 hover:border-teal-300'
+                  }`}
+              >
+                <div className={`w-12 h-12 rounded-full mb-2 flex items-center justify-center ${role === 'user' ? 'bg-teal-100' : 'bg-gray-100'
+                  }`}>
+                  <FaUserInjured className={`text-xl ${role === 'user' ? 'text-teal-600' : 'text-gray-500'
+                    }`} />
+                </div>
+                <span className="font-medium">Individual</span>
+                <span className="text-xs text-gray-500 mt-1">Seeking support</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setRole('therapist')}
+                className={`flex-1 flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all ${role === 'therapist'
+                  ? 'border-teal-500 bg-teal-50'
+                  : 'border-gray-200 hover:border-teal-300'
+                  }`}
+              >
+                <div className={`w-12 h-12 rounded-full mb-2 flex items-center justify-center ${role === 'therapist' ? 'bg-teal-100' : 'bg-gray-100'
+                  }`}>
+                  <FaUserMd className={`text-xl ${role === 'therapist' ? 'text-teal-600' : 'text-gray-500'
+                    }`} />
+                </div>
+                <span className="font-medium">Therapist</span>
+                <span className="text-xs text-gray-500 mt-1">Providing support</span>
+              </button>
+            </div>
+          </div>
 
           <div className="mb-6">
             <label className="block text-gray-700 mb-2 font-medium" htmlFor="email">
@@ -237,13 +312,6 @@ const AuthPages = () => {
 
           {isLogin && (
             <div className="flex justify-end items-center mb-6">
-              {/* <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  className="form-checkbox h-4 w-4 text-teal-600 transition duration-150 ease-in-out rounded"
-                />
-                <span className="ml-2 text-sm text-gray-700">Remember me</span>
-              </label> */}
               <Link href="/forgot-password" className="text-sm text-teal-600 hover:text-teal-800 transition-colors">
                 Forgot password?
               </Link>
@@ -254,7 +322,10 @@ const AuthPages = () => {
             type="submit"
             className="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50"
           >
-            {isLogin ? 'Login to Your Account' : 'Create Account'}
+            {isLogin
+              ? (role === 'therapist' ? 'Login as Therapist' : 'Login as User')
+              : (role === 'therapist' ? 'Apply as Therapist' : 'Create Account')
+            }
           </button>
         </form>
 
@@ -278,12 +349,45 @@ const AuthPages = () => {
 
           {
             isLogin
-              ? <GoogleSignIn />
-              : <GoogleSignUp />
+              ? <GoogleSignIn role={role} />
+              : <GoogleSignUp role={role} />
           }
         </div>
       </div>
 
+      {/* Role Explanation - Only shown during signup */}
+      {!isLogin && (
+        <div className="mt-8 max-w-md bg-white rounded-xl p-6 shadow-sm">
+          <h3 className="font-bold text-gray-900 mb-3">Which role should I choose?</h3>
+          <div className="space-y-4">
+            <div className="flex items-start">
+              <div className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center mr-3 flex-shrink-0">
+                <FaUserInjured className="text-teal-600" />
+              </div>
+              <div>
+                <h4 className="font-medium text-gray-900">Individual</h4>
+                <p className="text-sm text-gray-600">
+                  Choose this if you&apos;re seeking mental health support, therapy sessions,
+                  or want to participate in our community.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start">
+              <div className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center mr-3 flex-shrink-0">
+                <FaUserMd className="text-teal-600" />
+              </div>
+              <div>
+                <h4 className="font-medium text-gray-900">Therapist</h4>
+                <p className="text-sm text-gray-600">
+                  Choose this if you&apos;re a licensed mental health professional
+                  interested in providing therapy through our platform.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
