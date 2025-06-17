@@ -71,6 +71,7 @@ const AuthPages = () => {
       if (isLogin) {
         if (role === 'user') {
           const loginData = { ...formData, role };
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const response = await dispatch(login(loginData as any) as any);
           if (response?.error) {
             setLoading(false)
@@ -82,6 +83,7 @@ const AuthPages = () => {
           }
         } else {
           const loginData = { ...formData, role };
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const response = await dispatch(loginTherapist(loginData as any) as any);
           if (response?.error) {
             setLoading(false)
@@ -95,6 +97,7 @@ const AuthPages = () => {
       } else {
         if (role === 'user') {
           const signupData = { ...formData, role };
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const response = await dispatch(signup(signupData as any) as any);
           if (response?.error) {
             setLoading(false)
@@ -106,6 +109,7 @@ const AuthPages = () => {
           }
         } else {
           const signupData = { ...formData, role };
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const response = await dispatch(signupTherapist(signupData as any) as any);
           if (response?.error) {
             setLoading(false)
@@ -363,7 +367,7 @@ const AuthPages = () => {
               <div>
                 <h4 className="font-medium text-gray-900">Individual</h4>
                 <p className="text-sm text-gray-600">
-                  Choose this if you're seeking mental health support, therapy sessions,
+                  Choose this if you&apos;re seeking mental health support, therapy sessions,
                   or want to participate in our community.
                 </p>
               </div>
@@ -376,7 +380,7 @@ const AuthPages = () => {
               <div>
                 <h4 className="font-medium text-gray-900">Therapist</h4>
                 <p className="text-sm text-gray-600">
-                  Choose this if you're a licensed mental health professional
+                  Choose this if you&apos;re a licensed mental health professional
                   interested in providing therapy through our platform.
                 </p>
               </div>

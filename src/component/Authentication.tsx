@@ -6,8 +6,8 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { googleLogin, googleSignup } from "@/store/userSlice";
 
-const backend = process.env.NEXT_PUBLIC_BACKEND_URL as string;
 const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string;
+
 export const GoogleSignUp = ({ role }: { role: string }) => {
     const router = useRouter();
     const dispatch = useDispatch()
@@ -19,6 +19,7 @@ export const GoogleSignUp = ({ role }: { role: string }) => {
             idToken,
             role
         }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const response2 = await dispatch(googleSignup(data as any) as any);
         if (response2?.error) {
             toast.error(response2.error.message)
@@ -56,6 +57,7 @@ export const GoogleSignIn = ({ role }: { role: string }) => {
             idToken,
             role
         }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const response2 = await dispatch(googleLogin(data as any) as any);
         if (response2?.error) {
             toast.error(response2.error.message);
