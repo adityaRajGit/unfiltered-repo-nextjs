@@ -1,29 +1,30 @@
 "use client";
-
 import React from "react";
 import { GoogleOAuthProvider, GoogleLogin, CredentialResponse } from "@react-oauth/google";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { TOKEN } from "@/utils/enum";
+import { useDispatch } from "react-redux";
+import { googleLogin, googleSignup } from "@/store/userSlice";
 
 const backend = process.env.NEXT_PUBLIC_BACKEND_URL as string;
 const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string;
-
-export const GoogleSignUp = () => {
+export const GoogleSignUp = ({ role }: { role: string }) => {
     const router = useRouter();
+    const dispatch = useDispatch()
+
 
     const handleLoginSuccess = async (response: CredentialResponse) => {
         const idToken = response.credential;
-        try {
-            const res = await axios.post(`${backend}/user/google-auth`, { idToken });
-            if (res.status === 200) {
-                localStorage.setItem(TOKEN, JSON.stringify(res.data.token));
-                router.push("/");
-                toast.success("User Created Successfully");
-            }
-        } catch (error) {
-            console.error("Error sending ID token to backend:", error);
+        const data = {
+            idToken,
+            role
+        }
+        const response2 = await dispatch(googleSignup(data as any) as any);
+        if (response2?.error) {
+            toast.error(response2.error.message)
+        } else {
+            toast.success("User Logged in Successfully")
+            router.push('/')
         }
     };
 
@@ -45,25 +46,22 @@ export const GoogleSignUp = () => {
     );
 };
 
-export const GoogleSignIn: React.FC = () => {
+export const GoogleSignIn = ({ role }: { role: string }) => {
     const router = useRouter();
+    const dispatch = useDispatch()
 
     const handleLoginSuccess = async (response: CredentialResponse) => {
         const idToken = response.credential;
-        try {
-            const res = await axios.post(`${backend}/user/google-auth-sigin`, { idToken });
-            if (res.status === 200 && res.data?.data?.token) {
-                localStorage.setItem(TOKEN, res.data.data.token);
-                router.push("/");
-                toast.success("User Logged in Successfully");
-            }
-        } catch (error: unknown) {
-            if (axios.isAxiosError(error)) {
-                toast.error(error.response?.data?.message || "Something went wrong");
-            } else {
-                console.error(error);
-            }
-            router.push("/pages/login");
+        const data = {
+            idToken,
+            role
+        }
+        const response2 = await dispatch(googleLogin(data as any) as any);
+        if (response2?.error) {
+            toast.error(response2.error.message);
+        } else {
+            toast.success('Account created successfully!');
+            router.push('/');
         }
     };
 

@@ -25,6 +25,8 @@ export const Header = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const router = useRouter()
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const buttonRef = useRef<HTMLButtonElement>(null);
+
 
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
@@ -80,7 +82,9 @@ export const Header = () => {
         const handleClickOutside = (event: MouseEvent) => {
             if (
                 dropdownRef.current &&
-                !dropdownRef.current.contains(event.target as Node)
+                !dropdownRef.current.contains(event.target as Node) &&
+                buttonRef.current &&
+                !buttonRef.current.contains(event.target as Node)
             ) {
                 setIsDropdownOpen(false);
             }
@@ -91,7 +95,6 @@ export const Header = () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
-
 
     if (loading) {
         return (
@@ -235,11 +238,12 @@ export const Header = () => {
                     {user ? (
                         <div className="relative">
                             <button
+                                ref={buttonRef}
                                 onClick={toggleDropdown}
                                 className="w-9 h-9 rounded-full bg-gray-100 border-2 border-teal-500 overflow-hidden flex items-center justify-center focus:outline-none"
                             >
                                 {userData?.profile_pic ? (
-                                    <Image src={userData.profile_pic} alt="Profile" className="w-full h-full object-cover" />
+                                    <Image src={userData.profile_pic} width={100} height={100} alt="Profile" className="w-full h-full object-cover" />
                                 ) : (
                                     <span className="text-teal-600 font-bold text-sm uppercase">
                                         {getInitials(userData?.name || '')}
@@ -252,7 +256,7 @@ export const Header = () => {
                                     <div className="p-4 border-b border-gray-100 flex items-center space-x-3">
                                         <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-100 border border-teal-500 flex items-center justify-center">
                                             {userData?.profile_pic ? (
-                                                <Image src={userData.profile_pic} alt="Profile" className="w-full h-full object-cover" />
+                                                <Image src={userData.profile_pic} width={100} height={100} alt="Profile" className="w-full h-full object-cover" />
                                             ) : (
                                                 <span className="text-teal-600 font-bold text-lg uppercase">
                                                     {getInitials(userData?.name || '')}
