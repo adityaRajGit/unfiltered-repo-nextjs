@@ -4,8 +4,9 @@ import { useState, useEffect, useRef } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { FaUser, FaSignInAlt, FaTimes } from 'react-icons/fa';
 import { TOKEN } from '@/utils/enum';
-import { decodeToken } from '@/utils/decodeToken';
 import Image from 'next/image';
+import axios from 'axios';
+import { validateToken } from '@/utils/tokenUtils';
 
 interface UserData {
     name: string;
@@ -15,7 +16,7 @@ interface UserData {
     username: string;
     profile_pic: string;
 }
-
+const backend = process.env.NEXT_PUBLIC_BACKEND_URL as string;
 export const Header = () => {
     const [user, setUser] = useState(false);
     const [userData, setUserData] = useState<UserData | null>(null);
@@ -33,22 +34,22 @@ export const Header = () => {
     };
 
     const handleLogout = () => {
-        setLoading(true);
-        setTimeout(() => {
-            localStorage.removeItem(TOKEN);
-            setUser(false);
-            setUserData(null);
-            setIsDropdownOpen(false);
-            setLoading(false);
-            router.push('/');
-        }, 1000)
-    };
+  cleanStoredToken();
+  router.push('/');
+};
 
     const pathname = usePathname();
 
     useEffect(() => {
         setIsMenuOpen(false);
     }, [pathname]);
+
+    
+    useEffect(() => {
+      if (storedToken && !validateToken(storedToken)) {
+        localStorage.removeItem(TOKEN);
+      }
+    }, []);
 
     const navItems = [
         { name: 'Home', href: '/' },
@@ -65,18 +66,53 @@ export const Header = () => {
         if (parts.length === 1) return parts[0][0].toUpperCase();
         return (parts[0][0] + parts[1][0]).toUpperCase();
     };
-
+    const cleanStoredToken = () => {
+    localStorage.removeItem(TOKEN);
+    setUser(false);
+    setUserData(null);
+    };
 
     useEffect(() => {
-        if (storedToken !== null) {
-            const decodedToken = decodeToken(storedToken as string);
-            if (decodedToken?.userId) {
-                setUser(true);
-                setUserData(decodedToken?.userId);
-            }
+    const token = localStorage.getItem(TOKEN);
+    if (token) {
+        try {
+        // Basic token validation
+        if (token.split('.').length !== 3) {
+            cleanStoredToken();
         }
-        setLoading(false);
-    }, [storedToken])
+        } catch (e) {
+        cleanStoredToken();
+        console.log(e);
+        }
+    }
+    }, []);
+
+    useEffect(() => {
+  const fetchUserData = async () => {
+    if (storedToken) {
+      try {
+        const response = await axios.get(`${backend}/user/me`, {
+          headers: {
+            Authorization: `Bearer ${storedToken}`
+          }
+        });
+        
+        if (response.data?.data?.user) {
+          setUserData(response.data.data.user);
+          setUser(true);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        if (axios.isAxiosError(error) && error.response?.status === 401) {
+          localStorage.removeItem(TOKEN);
+        }
+      }
+    }
+    setLoading(false);
+  };
+
+  fetchUserData();
+}, [storedToken]);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
